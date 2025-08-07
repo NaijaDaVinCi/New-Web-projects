@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 25.2.3.2 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="00:00:00"/>
+	<style type="text/css">
+		@page { size: 8.27in 11.69in; margin: 0.79in }
+		p { margin-bottom: 0.1in; line-height: 115%; background: transparent }
+		pre { font-size: 10pt; font-family: "Liberation Mono", monospace; background: transparent }
+	</style>
+</head>
+<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><pre>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot; /&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+  &lt;title&gt;Wedding Countdown&lt;/title&gt;
+  &lt;script src=&quot;https://cdn.tailwindcss.com&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body class=&quot;bg-pink-50 min-h-screen flex items-center justify-center p-4&quot;&gt;
+  &lt;div class=&quot;bg-white shadow-xl rounded-2xl max-w-lg w-full p-6 text-center&quot;&gt;
+    &lt;h1 class=&quot;text-3xl font-bold text-pink-600 mb-4&quot;&gt;💍 Wedding Countdown&lt;/h1&gt;&lt;div id=&quot;form-section&quot;&gt;
+  &lt;input id=&quot;bride&quot; type=&quot;text&quot; placeholder=&quot;Bride's Name&quot; class=&quot;w-full mb-2 p-2 border rounded&quot; /&gt;
+  &lt;input id=&quot;groom&quot; type=&quot;text&quot; placeholder=&quot;Groom's Name&quot; class=&quot;w-full mb-2 p-2 border rounded&quot; /&gt;
+  &lt;input id=&quot;date&quot; type=&quot;date&quot; class=&quot;w-full mb-4 p-2 border rounded&quot; /&gt;
+  &lt;button onclick=&quot;startCountdown()&quot; class=&quot;bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded&quot;&gt;Start Countdown&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;countdown-section&quot; class=&quot;hidden&quot;&gt;
+  &lt;h2 id=&quot;names&quot; class=&quot;text-xl font-semibold mb-2&quot;&gt;&lt;/h2&gt;
+  &lt;p class=&quot;text-gray-600 mb-4&quot;&gt;Counting down to your special day 💞&lt;/p&gt;
+  &lt;div id=&quot;timer&quot; class=&quot;text-4xl font-bold text-pink-700 mb-4&quot;&gt;&lt;/div&gt;
+  &lt;a id=&quot;shareLink&quot; class=&quot;text-sm text-blue-600 underline&quot; href=&quot;#&quot;&gt;Share this countdown 🔗&lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;  &lt;script&gt;
+    function startCountdown() {
+      const bride = document.getElementById('bride').value.trim();
+      const groom = document.getElementById('groom').value.trim();
+      const date = document.getElementById('date').value;
+      if (!bride || !groom || !date) return alert(&quot;Please fill all fields&quot;);
+      const url = `${location.origin}${location.pathname}?bride=${encodeURIComponent(bride)}&amp;groom=${encodeURIComponent(groom)}&amp;date=${date}`;
+      window.location.href = url;
+    }
+
+    function runTimer(targetDate) {
+      const timerEl = document.getElementById('timer');
+      const interval = setInterval(() =&gt; {
+        const now = new Date().getTime();
+        const diff = new Date(targetDate).getTime() - now;
+        if (diff &lt;= 0) {
+          clearInterval(interval);
+          timerEl.innerText = &quot;🎉 It's your wedding day!&quot;;
+          return;
+        }
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const mins = Math.floor((diff / (1000 * 60)) % 60);
+        const secs = Math.floor((diff / 1000) % 60);
+        timerEl.innerText = `${days}d ${hours}h ${mins}m ${secs}s`;
+      }, 1000);
+    }
+
+    // Load from URL
+    const params = new URLSearchParams(window.location.search);
+    const bride = params.get(&quot;bride&quot;);
+    const groom = params.get(&quot;groom&quot;);
+    const date = params.get(&quot;date&quot;);
+    if (bride &amp;&amp; groom &amp;&amp; date) {
+      document.getElementById(&quot;form-section&quot;).classList.add(&quot;hidden&quot;);
+      document.getElementById(&quot;countdown-section&quot;).classList.remove(&quot;hidden&quot;);
+      document.getElementById(&quot;names&quot;).innerText = `${bride} ❤️ ${groom}`;
+      runTimer(date);
+      document.getElementById(&quot;shareLink&quot;).href = window.location.href;
+    }
+  &lt;/script&gt;&lt;/body&gt;
+&lt;/html&gt;</pre>
+</body>
+</html>
